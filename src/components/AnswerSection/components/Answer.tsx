@@ -30,8 +30,6 @@ const Answer = ({
         }
     }, [showSwiper]);
 
-    console.log('showRightChoice ', showRightChoice, 'answer ', option.answer);
-
     return (
         <Pressable
             onPress={selectAnswer}

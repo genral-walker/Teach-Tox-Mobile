@@ -10,17 +10,13 @@ const Answers = forwardRef(
         {
             options,
             correct_option_id,
-            index,
-            currentIndex,
         }: {
             options: Option[];
             correct_option_id: string;
-            index: number;
-            currentIndex: number;
         },
         outerRef: any
     ) => {
-        const [selectedAnswerId, setSelectedAnswerId] = useState(''); // we need to make this based on the index of the answer wrapper
+        const [selectedAnswerId, setSelectedAnswerId] = useState('');
 
         const translateXGif = new Animated.Value(-40);
         const translateXBg = new Animated.Value(width);

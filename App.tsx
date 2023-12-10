@@ -75,10 +75,11 @@ export default function App() {
         const scrollY = contentOffset.y;
         const questionHeight = layoutMeasurement.height;
 
-        const scrollPercentage = (scrollY / questionHeight) * 100;
-        const percentOut = 51 + Number(currentIndex ? currentIndex * 100 : 0);
+        const scrollPercentage = Math.floor((scrollY / questionHeight) * 100);
+        const percentOut = 43 + Number(currentIndex ? currentIndex * 100 : 0);
+        const percentIn = Number((currentIndex ? currentIndex - 1 || '' : '') + '85');
 
-        if (scrollPercentage > percentOut) {
+        if (scrollPercentage > percentOut || scrollPercentage <= percentIn) {
             answerRefs.current[currentIndex].resetClick();
         }
     };
@@ -127,8 +128,6 @@ export default function App() {
                                             options={item.options}
                                             correct_option_id={item.correct_option_id!}
                                             ref={(ref) => (answerRefs.current[index] = ref)}
-                                            index={index}
-                                            currentIndex={currentIndex}
                                         />
                                     </Question>
                                 )}

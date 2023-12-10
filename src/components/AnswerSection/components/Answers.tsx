@@ -19,7 +19,7 @@ const Answers = forwardRef(
         const [selectedAnswerId, setSelectedAnswerId] = useState('');
 
         const translateXGif = new Animated.Value(-40);
-        const translateXBg = new Animated.Value(width);
+        const translateXBg = new Animated.Value(width - 80);
         const translateXBgReverse = new Animated.Value(0);
 
         const animationConfig = {
@@ -35,12 +35,15 @@ const Answers = forwardRef(
         const startAnimations = () => {
             Animated.timing(translateXGif, animationConfig).start();
             Animated.timing(translateXBg, animationConfig).start();
-            Animated.timing(translateXBgReverse, { ...animationConfig, toValue: -width }).start();
+            Animated.timing(translateXBgReverse, {
+                ...animationConfig,
+                toValue: -(width - 80),
+            }).start();
         };
 
         const resetAnimations = () => {
             Animated.timing(translateXGif, { ...animationConfig, toValue: -40 }).start();
-            Animated.timing(translateXBg, { ...animationConfig, toValue: width }).start();
+            Animated.timing(translateXBg, { ...animationConfig, toValue: width - 80 }).start();
             Animated.timing(translateXBgReverse, { ...animationConfig, toValue: 0 }).start();
         };
 
@@ -66,7 +69,11 @@ const Answers = forwardRef(
                         translateXGif={translateXGif}
                         startAnimations={startAnimations}
                         selectedAnswerId={selectedAnswerId}
-                        translateXBgReverse={translateXBgReverse}
+                        translateXBgReverse={
+                            thisItemClicked(option.id) || rightChoiceUnClicked(option.id)
+                                ? translateXBgReverse
+                                : null
+                        }
                         key={option.answer + idx}
                     />
                 ))}

@@ -22,7 +22,7 @@ const Answer = ({
     showSwiper: boolean;
     translateXGif: Animated.Value;
     translateXBg: Animated.Value;
-    translateXBgReverse: Animated.Value;
+    translateXBgReverse: Animated.Value | null;
     startAnimations: () => void;
     selectedAnswerId: string;
 }) => {
@@ -64,8 +64,7 @@ const Answer = ({
                         left: 0,
                         transform: [
                             {
-                                translateX:
-                                    selectedAnswerId !== option.id ? 0 : translateXBgReverse,
+                                translateX: translateXBgReverse ?? 0,
                             },
                         ],
                     },
@@ -143,7 +142,7 @@ const localStyles = StyleSheet.create({
         top: 0,
         borderRadius: 10,
         height: 100,
-        width,
+        width: width - 80,
         zIndex: -3,
     },
 });

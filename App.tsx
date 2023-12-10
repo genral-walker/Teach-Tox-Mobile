@@ -76,10 +76,10 @@ export default function App() {
         const questionHeight = layoutMeasurement.height;
 
         const scrollPercentage = Math.floor((scrollY / questionHeight) * 100);
-        const percentOut = 43 + Number(currentIndex ? currentIndex * 100 : 0);
+        const percentOut = 41 + Number(currentIndex ? currentIndex * 100 : 0);
         const percentIn = Number((currentIndex ? currentIndex - 1 || '' : '') + '85');
 
-        if (scrollPercentage > percentOut || scrollPercentage <= percentIn) {
+        if (scrollPercentage > percentOut || (currentIndex && scrollPercentage <= percentIn)) {
             answerRefs.current[currentIndex].resetClick();
         }
     };

@@ -14,6 +14,7 @@ const Answer = ({
     translateXBg,
     translateXGif,
     selectedAnswerId,
+    translateXBgReverse,
 }: {
     option: Option;
     selectAnswer: () => void;
@@ -21,6 +22,7 @@ const Answer = ({
     showSwiper: boolean;
     translateXGif: Animated.Value;
     translateXBg: Animated.Value;
+    translateXBgReverse: Animated.Value;
     startAnimations: () => void;
     selectedAnswerId: string;
 }) => {
@@ -34,7 +36,6 @@ const Answer = ({
         <Pressable
             onPress={selectAnswer}
             style={{
-                backgroundColor: '#abababa9',
                 borderRadius: 10,
                 height: 52,
                 paddingHorizontal: 12,
@@ -55,22 +56,35 @@ const Answer = ({
                 }),
             }}
         >
+            <Animated.View
+                style={[
+                    localStyles.swiper,
+                    {
+                        backgroundColor: '#abababa9',
+                        left: 0,
+                        transform: [
+                            {
+                                translateX:
+                                    selectedAnswerId !== option.id ? 0 : translateXBgReverse,
+                            },
+                        ],
+                    },
+                ]}
+            />
+
             {showSwiper && (
                 <Animated.View
-                    style={{
-                        backgroundColor: showRightChoice
-                            ? 'rgba(40, 177, 143, 0.5)'
-                            : 'rgba(220, 95, 95, 0.6)',
-                        position: 'absolute',
-                        borderRadius: 10,
-                        right: 0,
-                        top: 0,
-                        height: 100,
-                        width,
-                        zIndex: -3,
+                    style={[
+                        localStyles.swiper,
+                        {
+                            backgroundColor: showRightChoice
+                                ? 'rgba(40, 177, 143, 0.5)'
+                                : 'rgba(220, 95, 95, 0.6)',
 
-                        transform: [{ translateX: translateXBg }],
-                    }}
+                            right: 0,
+                            transform: [{ translateX: translateXBg }],
+                        },
+                    ]}
                 />
             )}
 
@@ -98,7 +112,7 @@ const Answer = ({
                 {option.answer}
             </Text>
 
-            {selectedAnswerId === option.id && showSwiper && (
+            {selectedAnswerId === option.id && (
                 <Animated.Image
                     source={
                         showRightChoice
@@ -122,5 +136,16 @@ const Answer = ({
         </Pressable>
     );
 };
+
+const localStyles = StyleSheet.create({
+    swiper: {
+        position: 'absolute',
+        top: 0,
+        borderRadius: 10,
+        height: 100,
+        width,
+        zIndex: -3,
+    },
+});
 
 export default Answer;

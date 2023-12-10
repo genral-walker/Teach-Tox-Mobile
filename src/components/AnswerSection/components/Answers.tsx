@@ -20,10 +20,11 @@ const Answers = forwardRef(
 
         const translateXGif = new Animated.Value(-40);
         const translateXBg = new Animated.Value(width);
+        const translateXBgReverse = new Animated.Value(0);
 
         const animationConfig = {
             toValue: 0,
-            duration: 300,
+            duration: 400,
             useNativeDriver: true,
         };
 
@@ -34,11 +35,13 @@ const Answers = forwardRef(
         const startAnimations = () => {
             Animated.timing(translateXGif, animationConfig).start();
             Animated.timing(translateXBg, animationConfig).start();
+            Animated.timing(translateXBgReverse, { ...animationConfig, toValue: -width }).start();
         };
 
         const resetAnimations = () => {
             Animated.timing(translateXGif, { ...animationConfig, toValue: -40 }).start();
             Animated.timing(translateXBg, { ...animationConfig, toValue: width }).start();
+            Animated.timing(translateXBgReverse, { ...animationConfig, toValue: 0 }).start();
         };
 
         useImperativeHandle(outerRef, () => ({
@@ -63,6 +66,7 @@ const Answers = forwardRef(
                         translateXGif={translateXGif}
                         startAnimations={startAnimations}
                         selectedAnswerId={selectedAnswerId}
+                        translateXBgReverse={translateXBgReverse}
                         key={option.answer + idx}
                     />
                 ))}
